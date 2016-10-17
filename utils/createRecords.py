@@ -6,9 +6,7 @@ import numpy as np
 import os
 import fnmatch
 
-in_shape  = (160,144)
-out_shape1 = (640,576)
-out_shape2 = (800,720)
+shape  = (160*2,144*2)
 
 # helper function
 def _bytes_feature(value):
@@ -27,7 +25,6 @@ def run(folder, dest_dir):
 
    record_writer = tf.python_io.TFRecordWriter(record)
 
-   #folder = "/home/neptune/data_dir/games/"
    pattern = "*.png"
    fileList = list()
 
@@ -41,63 +38,56 @@ def run(folder, dest_dir):
       
       try:
          img = cv2.imread(image_name)
+         img2 = np.zeros_like(img)
       except:
          print "corrupt image: " + str(image_name)
          continue
       
       # make a copy of the image for the desired output of the network
       try:
-         hd_img1 = img.copy()
-         hd_img2 = img.copy()
+         original_image = img.copy()
       except:
          print "Couldn't copy image " + str(image_name)
          pass
-      
-      # resize to be 720p
-      try:
-         hd_img1 = cv2.resize(img, out_shape1, interpolation=cv2.INTER_CUBIC)
-         hd_img2 = cv2.resize(img, out_shape2, interpolation=cv2.INTER_CUBIC)
-         hd_height1, hd_width1, hd_channels1 = hd_img1.shape
-         hd_height2, hd_width2, hd_channels2 = hd_img2.shape
+     
 
-         # resize to gameboy color dimensions
-         img = cv2.resize(img, in_shape, interpolation=cv2.INTER_CUBIC)
-         height, width, channels = img.shape
+      try:
+         # make image gray
+         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+         # resize gray image
+         img_gray = cv2.resize(img_gray, shape, interpolation=cv2.INTER_CUBIC)
+         img2 = cv2.resize(img2, shape, interpolation=cv2.INTER_CUBIC)
+         #img2 = np.expand_dims(img2, axis=2)
+
+         img2[:,:,0] = img_gray
+         img2[:,:,1] = img_gray
+         img2[:,:,2] = img_gray
+         
+         height, width, channels = img2.shape
+
+         # resize original image
+         original_image = cv2.resize(original_image, shape, interpolation=cv2.INTER_CUBIC)
+
       except:
          print "Error with " + str(image_name)
+         raise
+         exit()
          continue
 
-      # change to 15-bit colorspace
-      for i in range(0, height):
-         for j in range(0, width):
-            r = img[i,j][0]
-            g = img[i,j][1]
-            b = img[i,j][2]
-            r_p = (r*31/255)*(255/31)
-            g_p = (g*31/255)*(255/31)
-            b_p = (b*31/255)*(255/31)
-
-            img[i,j] = [r_p, g_p, b_p]
-            
       # flatten image
-      img_flat = np.reshape(img, [1, in_shape[0]*in_shape[1]*3])
-
-      # flatten hd image
-      hd_img_flat1 = np.reshape(hd_img1, [1, hd_height1*hd_width1*3])
-      hd_img_flat2 = np.reshape(hd_img2, [1, hd_height2*hd_width2*3])
+      img2 = np.reshape(img2, [1, shape[0]*shape[1]*3])
+      original_image = np.reshape(original_image, [1, shape[0]*shape[1]*3])
 
       example = tf.train.Example(features=tf.train.Features(feature={
-         'hd_image1': _bytes_feature(hd_img_flat1.tostring()),
-         'hd_image2': _bytes_feature(hd_img_flat2.tostring()),
-         'img'     : _bytes_feature(img_flat.tostring())}))
+         'original_image': _bytes_feature(original_image.tostring()),
+         'gray_image': _bytes_feature(img2.tostring())}))
 
       try:
          record_writer.write(example.SerializeToString())
       except:
          raise
       count += 1
-      if count == 200:
-         break
    print "Created " + str(count) + " records"
 
 if __name__ == "__main__":

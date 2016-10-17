@@ -13,7 +13,7 @@ import input_
 import architecture
 import time
 
-def train(checkpoint_dir, record_file, batch_size, type_):
+def train(checkpoint_dir, record_file, batch_size):
    with tf.Graph().as_default():
 
       batch_size = int(batch_size)
@@ -21,22 +21,15 @@ def train(checkpoint_dir, record_file, batch_size, type_):
 
       train_size = 148623
 
-      gameboy_images, hd_images1 = input_.inputs(record_file, batch_size, "train")
+      original_images, gray_images = input_.inputs(record_file, batch_size, "train")
 
       # image summary for tensorboard
-      tf.image_summary('gameboy_images', gameboy_images, max_images=100)
-      tf.image_summary('hd_images1', hd_images1, max_images=100)
-      #tf.image_summary('hd_images2', hd_images2, max_images=100)
+      tf.image_summary('original_images', original_images, max_images=100)
+      tf.image_summary('gray_images', gray_images, max_images=100)
 
-      logits = architecture.inference(batch_size, gameboy_images, "train")
+      logits = architecture.inference(batch_size, gray_images, "train")
 
-      # loss is the l2 norm of my input vector (the image) and the output vector (generated image)
-      if type_ == "1":
-         print "Training for 480p..."
-         loss = architecture.loss(hd_images1, logits)
-      #elif type_ == "2":
-      #   print "Training for 720p..."
-      #  loss = architecture.loss(hd_images2, logits)
+      loss = architecture.loss(gray_images, logits)
 
       tf.scalar_summary('loss', loss)
       
@@ -57,15 +50,13 @@ def train(checkpoint_dir, record_file, batch_size, type_):
       sess.run(init)
       print "\nRunning session\n"
 
-
       # saver for the model
       saver = tf.train.Saver(tf.all_variables())
       
       tf.train.start_queue_runners(sess=sess)
 
-
       # restore previous model if one
-      ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
+      ckpt = tf.train.get_checkpoint_state(checkpoint_dir+"training")
       if ckpt and ckpt.model_checkpoint_path:
          print "Restoring previous model..."
          try:
@@ -93,12 +84,9 @@ def train(checkpoint_dir, record_file, batch_size, type_):
             print "Epoch: " + str(epoch_num) + " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
             summary_str = sess.run(summary_op)
             summary_writer.add_summary(summary_str, step)
-         # save checkpoint
-         #if step%(train_size/batch_size) == 0:
          if step%1000 == 0:
             print "Finished epoech " + str(epoch_num) + " ....saving model"
             print
-            #saver.save(sess, checkpoint_dir+"epoch-"+str(epoch_num), global_step=global_step)
             saver.save(sess, checkpoint_dir+"training/checkpoint", global_step=global_step)
             print
 
@@ -107,7 +95,6 @@ def main(argv=None):
    parser.add_option("-c", "--checkpoint_dir",          type="str")
    parser.add_option("-r", "--record_file",             type="str")
    parser.add_option("-b", "--batch_size", default=100, type="int")
-   parser.add_option("-t", "--type", default="1", type="str")
 
    opts, args = parser.parse_args()
    opts = vars(opts)
@@ -115,7 +102,6 @@ def main(argv=None):
    checkpoint_dir = opts['checkpoint_dir']
    batch_size     = opts['batch_size']
    record_file    = opts['record_file']
-   type_          = opts['type']
 
    if not os.path.isfile(record_file):
       print "Record file not found"
@@ -129,10 +115,6 @@ def main(argv=None):
    print "checkpoint_dir: " + str(checkpoint_dir)
    print "record_file:    " + str(record_file)
    print "batch_size:     " + str(batch_size)
-   if type_ == "1":
-      print "image type:     480p"
-   elif type_ == "2":
-      print "image type:     720p"
    print
 
    
@@ -141,7 +123,7 @@ def main(argv=None):
    if answer == "n":
       exit()
 
-   train(checkpoint_dir, record_file, batch_size, type_)
+   train(checkpoint_dir, record_file, batch_size)
 
 
 if __name__ == "__main__":
@@ -151,7 +133,6 @@ if __name__ == "__main__":
       print "-c --checkpoint_dir <str> [path to save the model]"
       print "-r --record_file    <str> [path to the record file]"
       print "-b --batch_size     <int> [batch size]"
-      print "-t --type           <str> [type] 1: 480p 2: 720p"
       print
       exit()
 

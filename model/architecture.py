@@ -90,29 +90,29 @@ def deconv(inputs, stride, out_shape, kernel_size, num_features, idx, linear=Fal
         f2 = 0.5 * (1 - leak)
         return f1 * d_conv + f2 * abs(d_conv)
 
-def _phase_shift(I, r):
-    bsize, a, b, c = I.get_shape().as_list()
-    bsize = tf.shape(I)[0] # Handling Dimension(None) type for undefined batch dim
-    X = tf.reshape(I, (bsize, a, b, r, r))
-    X = tf.transpose(X, (0, 1, 2, 4, 3))  # bsize, a, b, 1, 1
-    X = tf.split(1, a, X)  # a, [bsize, b, r, r]
-    X = tf.concat(2, [tf.squeeze(x) for x in X])  # bsize, b, a*r, r
-    X = tf.split(1, b, X)  # b, [bsize, a*r, r]
-    X = tf.concat(2, [tf.squeeze(x) for x in X])  # bsize, a*r, b*r
-    return tf.reshape(X, (bsize, a*r, b*r, 1))
-
-def PS(X, r, color=False):
-    if color:
-        Xc = tf.split(3, 3, X)
-        X = tf.concat(3, [_phase_shift(x, r) for x in Xc])
-    else:
-        X = _phase_shift(X, r)
-    return X
-
 def inference(batch_size, images, name):
+   conv1 = _conv_layer(images, 3, 3, 32, 1)
+   print conv1
 
+   conv2 = _conv_layer(conv1, 3, 3, 64, 2)
+   print conv2
+
+   conv3 = _conv_layer(conv2, 1, 1, 128, 3)
+   print conv3
+
+   conv4 = _conv_layer(conv3, 1, 1, 256, 4)
+   print conv4
+   
+   d_conv1 = deconv(conv4, 3, [batch_size, 36, 32, 256], 1, 256, 1, False)
+   print d_conv1
+
+   d_conv2 = deconv(d_conv1, 3, [batch_size, 107, 96, 128], 1, 128, 2, False)
+   print d_conv2
+   d_conv3 = deconv(d_conv2, 3, [batch_size, 320, 288, 3], 1, 3, 3, False)
+   print d_conv3
            # input, kernel size, stride, num_features, num_
    #conv1 = tf.nn.dropout(images, .8)
+   '''
    print images
    out_shape = tf.pack([images.get_shape()[0], 144, 160, 64])
    d_conv1 = deconv(images, 1, out_shape, 5, 64, '1') 
@@ -130,6 +130,7 @@ def inference(batch_size, images, name):
    d_conv3 = tf.nn.tanh(d_conv3)
    print(d_conv3.get_shape())
    tf.image_summary("generated", d_conv3, max_images=100) 
+   '''
 
    return d_conv3
 
