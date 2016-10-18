@@ -19,8 +19,6 @@ def train(checkpoint_dir, record_file, batch_size):
       batch_size = int(batch_size)
       global_step = tf.Variable(0, name='global_step', trainable=False)
 
-      train_size = 148623
-
       original_images, gray_images = input_.inputs(record_file, batch_size, "train")
 
       # image summary for tensorboard
@@ -81,11 +79,11 @@ def train(checkpoint_dir, record_file, batch_size):
          
          # save tensorboard stuff
          if step%200 == 0:
-            print "Epoch: " + str(epoch_num) + " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
+            print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
             summary_str = sess.run(summary_op)
             summary_writer.add_summary(summary_str, step)
          if step%1000 == 0:
-            print "Finished epoech " + str(epoch_num) + " ....saving model"
+            print "Saving model"
             print
             saver.save(sess, checkpoint_dir+"training/checkpoint", global_step=global_step)
             print
@@ -116,8 +114,6 @@ def main(argv=None):
    print "record_file:    " + str(record_file)
    print "batch_size:     " + str(batch_size)
    print
-
-   
 
    answer = raw_input("All correct?\n:")
    if answer == "n":

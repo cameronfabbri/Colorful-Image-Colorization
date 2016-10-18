@@ -6,7 +6,7 @@ import numpy as np
 import os
 import fnmatch
 
-shape  = (160*2,144*2)
+shape  = (160,144)
 
 # helper function
 def _bytes_feature(value):
@@ -38,7 +38,7 @@ def run(folder, dest_dir):
       
       try:
          img = cv2.imread(image_name)
-         img2 = np.zeros_like(img)
+         #img2 = np.zeros_like(img)
       except:
          print "corrupt image: " + str(image_name)
          continue
@@ -57,15 +57,13 @@ def run(folder, dest_dir):
 
          # resize gray image
          img_gray = cv2.resize(img_gray, shape, interpolation=cv2.INTER_CUBIC)
-         img2 = cv2.resize(img2, shape, interpolation=cv2.INTER_CUBIC)
+         #img2 = cv2.resize(img2, shape, interpolation=cv2.INTER_CUBIC)
          #img2 = np.expand_dims(img2, axis=2)
 
-         img2[:,:,0] = img_gray
-         img2[:,:,1] = img_gray
-         img2[:,:,2] = img_gray
+         #img2[:,:,0] = img_gray
+         #img2[:,:,1] = img_gray
+         #img2[:,:,2] = img_gray
          
-         height, width, channels = img2.shape
-
          # resize original image
          original_image = cv2.resize(original_image, shape, interpolation=cv2.INTER_CUBIC)
 
@@ -76,7 +74,7 @@ def run(folder, dest_dir):
          continue
 
       # flatten image
-      img2 = np.reshape(img2, [1, shape[0]*shape[1]*3])
+      img2 = np.reshape(img_gray, [1, shape[0]*shape[1]])
       original_image = np.reshape(original_image, [1, shape[0]*shape[1]*3])
 
       example = tf.train.Example(features=tf.train.Features(feature={
@@ -88,6 +86,10 @@ def run(folder, dest_dir):
       except:
          raise
       count += 1
+
+      if count == 200:
+         break
+
    print "Created " + str(count) + " records"
 
 if __name__ == "__main__":
