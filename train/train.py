@@ -5,29 +5,41 @@ import sys
 import numpy as np
 import cv2
 from optparse import OptionParser
+import fnmatch
 
-sys.path.insert(0, '../input/')
+sys.path.insert(0, '../utils/')
 sys.path.insert(0, '../model/')
 
-import input_
 import architecture
 import time
+import feed_dict as fd
 
-def train(checkpoint_dir, record_file, batch_size):
+def get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list):
+
+   original_images, gray_images = fd.get_batch(batch_size, image_list)
+
+   feed_dict = {
+      original_images_placeholder: original_images,
+      gray_images_placeholder: gray_images
+   }
+
+   return feed_dict
+
+
+def train(checkpoint_dir, image_list, batch_size):
    with tf.Graph().as_default():
 
-      batch_size = int(batch_size)
       global_step = tf.Variable(0, name='global_step', trainable=False)
 
-      original_images, gray_images = input_.inputs(record_file, batch_size, "train")
+      original_images_placeholder = tf.placeholder(tf.float32, shape=(batch_size, 144, 160, 3)) 
+      gray_images_placeholder     = tf.placeholder(tf.float32, shape=(batch_size, 144, 160, 3)) 
 
       # image summary for tensorboard
-      tf.image_summary('original_images', original_images, max_images=100)
-      tf.image_summary('gray_images', gray_images, max_images=100)
+      tf.image_summary('original_images', original_images_placeholder, max_images=100)
+      tf.image_summary('gray_images', gray_images_placeholder, max_images=100)
 
-      logits = architecture.inference(batch_size, gray_images, "train")
-
-      loss = architecture.loss(gray_images, logits)
+      logits = architecture.inference(batch_size, gray_images_placeholder, "train")
+      loss   = architecture.loss(original_images_placeholder, logits)
 
       tf.scalar_summary('loss', loss)
       
@@ -64,62 +76,68 @@ def train(checkpoint_dir, record_file, batch_size):
             print "Could not restore model"
             pass
 
-
       # Summary op
       graph_def = sess.graph.as_graph_def(add_shapes=True)
       summary_writer = tf.train.SummaryWriter(checkpoint_dir+"training", graph_def=graph_def)
 
       # Constants
       step = int(sess.run(global_step))
-      epoch_num = step/(train_size/batch_size)
+      #epoch_num = step/(train_size/batch_size)
 
       while True:
-         _, loss_value = sess.run([train_op, loss])
          step += 1
-         
+         feed_dict = get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list)
+         _, loss_value = sess.run([train_op, loss], feed_dict=feed_dict)
+         print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
+        
          # save tensorboard stuff
          if step%200 == 0:
-            print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
             summary_str = sess.run(summary_op)
             summary_writer.add_summary(summary_str, step)
+
          if step%1000 == 0:
             print "Saving model"
             print
             saver.save(sess, checkpoint_dir+"training/checkpoint", global_step=global_step)
             print
+         
 
 def main(argv=None):
-   parser = OptionParser(usage="usage")
-   parser.add_option("-c", "--checkpoint_dir",          type="str")
-   parser.add_option("-r", "--record_file",             type="str")
-   parser.add_option("-b", "--batch_size", default=100, type="int")
+   parser = OptionParser(usage='usage')
+   parser.add_option('-c', '--checkpoint_dir',          type='str')
+   parser.add_option('-b', '--batch_size', default=100, type='int')
+   parser.add_option('-d', '--data_dir', type='str')
 
    opts, args = parser.parse_args()
    opts = vars(opts)
 
    checkpoint_dir = opts['checkpoint_dir']
    batch_size     = opts['batch_size']
-   record_file    = opts['record_file']
-
-   if not os.path.isfile(record_file):
-      print "Record file not found"
-      exit()
+   data_dir       = opts['data_dir']
 
    if checkpoint_dir is None:
       print "checkpoint_dir is required"
       exit()
 
    print
-   print "checkpoint_dir: " + str(checkpoint_dir)
-   print "record_file:    " + str(record_file)
-   print "batch_size:     " + str(batch_size)
+   print 'checkpoint_dir: ' + str(checkpoint_dir)
+   print 'batch_size:     ' + str(batch_size)
+   print 'data_dir:       ' + str(data_dir)
    print
 
-   answer = raw_input("All correct?\n:")
-   if answer == "n":
-      exit()
+   #answer = raw_input("All correct?\n:")
+   #if answer == "n":
+   #   exit()
 
-   train(checkpoint_dir, record_file, batch_size)
+   pattern = "*resized.png"
+   image_list = list()
+   for d, s, fList in os.walk(data_dir):
+      for filename in fList:
+         if fnmatch.fnmatch(filename, pattern):
+            image_list.append(os.path.join(d,filename))
+
+   print str(len(image_list)) + ' images...'
+   train(checkpoint_dir, image_list, int(batch_size))
 
 
 if __name__ == "__main__":
@@ -127,8 +145,8 @@ if __name__ == "__main__":
    if sys.argv[1] == "--help" or sys.argv[1] == "-h" or len(sys.argv) < 2:
       print
       print "-c --checkpoint_dir <str> [path to save the model]"
-      print "-r --record_file    <str> [path to the record file]"
       print "-b --batch_size     <int> [batch size]"
+      print "-d --data_dir       <str> [path to root image folder]"
       print
       exit()
 

@@ -43,7 +43,6 @@ def _conv_layer(inputs, kernel_size, stride, num_features, idx):
    with tf.variable_scope('{0}_conv'.format(idx)) as scope:
       input_channels = inputs.get_shape()[3]
 
-      #weights = _variable_with_weight_decay('weights', shape=[kernel_size, kernel_size, input_channels, num_features], stddev=0.1, wd=FLAGS.weight_decay)
       weights = _variable_with_weight_decay('weights', shape=[kernel_size, kernel_size, input_channels, num_features], stddev=0.1, wd=FLAGS.weight_decay)
       biases = _variable_on_cpu('biases', [num_features], tf.constant_initializer(0.1))
 
@@ -74,6 +73,21 @@ def _fc_layer(inputs, hiddens, idx, flat = False, linear = False):
     return tf.maximum(FLAGS.alpha*ip,ip,name=str(idx)+'_fc')
 
 def inference(batch_size, images, name):
+   print '\n \n \n'
+   print images
+   print
+   conv1 = _conv_layer(images, 3, 1, 32, 1)
+   print conv1
+   conv2 = _conv_layer(conv1, 3, 1, 32, 2)
+   print conv2
+   conv3 = _conv_layer(conv2, 3, 1, 64, 3)
+   print conv3
+   conv4 = _conv_layer(conv3, 1, 1, 64, 4)
+   print conv4
+   conv5 = _conv_layer(conv4, 1, 1, 3, 5)
+   print conv5
+   return conv5
+   '''
    # architecture modeled from https://github.com/richzhang/colorization/blob/master/models/colorization_deploy_v1.prototxt
    # *****************
    # ***** conv1 *****
@@ -135,15 +149,10 @@ def inference(batch_size, images, name):
    conv8_2 = _conv_layer(conv8_1, 3, 1, 256, 20)
    conv8_3 = _conv_layer(conv8_2, 3, 1, 256, 21)
    #conv5_3norm = tf.nn.batch_normalization(conv1_2, tf.mean(conv1_2), )
-
+   '''
 
 
  
 def loss (input_images, predicted_images):
-   
-   
-
    error = tf.nn.l2_loss(input_images - predicted_images)
    return error 
-
-
