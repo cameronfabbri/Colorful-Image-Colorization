@@ -38,7 +38,7 @@ def train(checkpoint_dir, image_list, batch_size):
       tf.image_summary('original_images', original_images_placeholder, max_images=100)
       tf.image_summary('gray_images', gray_images_placeholder, max_images=100)
 
-      logits = architecture.inference(batch_size, gray_images_placeholder, "train")
+      logits = architecture.inference(gray_images_placeholder, "train")
       loss   = architecture.loss(original_images_placeholder, logits)
 
       tf.scalar_summary('loss', loss)
@@ -91,11 +91,11 @@ def train(checkpoint_dir, image_list, batch_size):
          print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
         
          # save tensorboard stuff
-         if step%200 == 0:
-            summary_str = sess.run(summary_op)
-            summary_writer.add_summary(summary_str, step)
+         #if step%200 == 0:
+         #   summary_str = sess.run(summary_op)
+         #   summary_writer.add_summary(summary_str, step)
 
-         if step%1000 == 0:
+         if step%300 == 0:
             print "Saving model"
             print
             saver.save(sess, checkpoint_dir+"training/checkpoint", global_step=global_step)
