@@ -72,7 +72,7 @@ def _fc_layer(inputs, hiddens, idx, flat = False, linear = False):
     ip = tf.add(tf.matmul(inputs_processed,weights),biases)
     return tf.maximum(FLAGS.alpha*ip,ip,name=str(idx)+'_fc')
 
-def inference(batch_size, images, name):
+def inference(images, name):
    print '\n \n \n'
    print images
    print
@@ -82,11 +82,24 @@ def inference(batch_size, images, name):
    print conv2
    conv3 = _conv_layer(conv2, 3, 1, 64, 3)
    print conv3
-   conv4 = _conv_layer(conv3, 1, 1, 64, 4)
+   conv4 = _conv_layer(conv3, 3, 1, 64, 4)
    print conv4
-   conv5 = _conv_layer(conv4, 1, 1, 3, 5)
+   conv5 = _conv_layer(conv4, 3, 1, 128, 5)
    print conv5
-   return conv5
+   conv6 = _conv_layer(conv5, 3, 1, 128, 6)
+   conv7 = _conv_layer(conv6, 3, 1, 256, 7)
+   conv8 = _conv_layer(conv7, 3, 1, 256, 8)
+   conv9 = _conv_layer(conv8, 3, 1, 128, 9)
+   conv10 = _conv_layer(conv9, 3, 1, 128, 10)
+   conv11 = _conv_layer(conv10, 1, 1, 64, 11)
+   conv12 = _conv_layer(conv11, 1, 1, 64, 12)
+   conv13 = _conv_layer(conv12, 1, 1, 32, 13)
+   conv14 = _conv_layer(conv13, 1, 1, 32, 14)
+   conv15 = _conv_layer(conv14, 1, 1, 16, 15)
+   conv16 = _conv_layer(conv15, 1, 1, 16, 16)
+   conv17 = _conv_layer(conv16, 1, 1, 8, 17)
+   conv18 = _conv_layer(conv17, 1, 1, 3, 18)
+   return conv18
    '''
    # architecture modeled from https://github.com/richzhang/colorization/blob/master/models/colorization_deploy_v1.prototxt
    # *****************
