@@ -43,14 +43,20 @@ def eval(checkpoint_dir, image):
       graph_def = sess.graph.as_graph_def(add_shapes=True)
       
       img = cv2.imread(image)
+
+      if  len(img.shape) != 3:
+         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+         img = np.expand_dims(img, axis=2)
+
       img = img.astype('float')
 
       fake = np.zeros((1,144,160,3))
       fake[0,:,:,:] = img
 
       gen_img = sess.run([logit], feed_dict={input_image:fake})[0]
+      image_name = image.split('.png')[0]+'_output.png'
 
-      cv2.imwrite('output.png', gen_img[0,:,:,:])
+      cv2.imwrite('../images/'+image_name, gen_img[0,:,:,:])
 
 def main(argv=None):
    eval(sys.argv[1], sys.argv[2])
