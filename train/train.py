@@ -14,9 +14,9 @@ import architecture
 import time
 import feed_dict as fd
 
-def get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list):
+def get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list, normalize):
 
-   original_images, gray_images = fd.get_batch(batch_size, image_list)
+   original_images, gray_images = fd.get_batch(batch_size, image_list, normalize)
 
    feed_dict = {
       original_images_placeholder: original_images,
@@ -26,7 +26,7 @@ def get_feed_dict(batch_size, original_images_placeholder, gray_images_placehold
    return feed_dict
 
 
-def train(checkpoint_dir, image_list, batch_size):
+def train(checkpoint_dir, image_list, batch_size, normalize):
    with tf.Graph().as_default():
 
       global_step = tf.Variable(0, name='global_step', trainable=False)
@@ -86,7 +86,7 @@ def train(checkpoint_dir, image_list, batch_size):
 
       while True:
          step += 1
-         feed_dict = get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list)
+         feed_dict = get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list, normalize)
          _, loss_value = sess.run([train_op, loss], feed_dict=feed_dict)
          print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
         
@@ -107,6 +107,7 @@ def main(argv=None):
    parser.add_option('-c', '--checkpoint_dir',          type='str')
    parser.add_option('-b', '--batch_size', default=100, type='int')
    parser.add_option('-d', '--data_dir', type='str')
+   parser.add_option('-n', '--normalize', type='str')
 
    opts, args = parser.parse_args()
    opts = vars(opts)
@@ -114,6 +115,12 @@ def main(argv=None):
    checkpoint_dir = opts['checkpoint_dir']
    batch_size     = opts['batch_size']
    data_dir       = opts['data_dir']
+   normalize      = opts['normalize']
+
+   if normalize == 'y':
+      normalize = True
+   else:
+      normalize = False
 
    if checkpoint_dir is None:
       print "checkpoint_dir is required"
@@ -137,7 +144,7 @@ def main(argv=None):
             image_list.append(os.path.join(d,filename))
 
    print str(len(image_list)) + ' images...'
-   train(checkpoint_dir, image_list, int(batch_size))
+   train(checkpoint_dir, image_list, int(batch_size), normalize)
 
 
 if __name__ == "__main__":
@@ -147,6 +154,7 @@ if __name__ == "__main__":
       print "-c --checkpoint_dir <str> [path to save the model]"
       print "-b --batch_size     <int> [batch size]"
       print "-d --data_dir       <str> [path to root image folder]"
+      print '-n --normalize      <str> [y/n normalize training images]'
       print
       exit()
 

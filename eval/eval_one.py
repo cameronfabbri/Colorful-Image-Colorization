@@ -48,12 +48,17 @@ def eval(checkpoint_dir, image):
          img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
          img = np.expand_dims(img, axis=2)
 
+      if img.shape[0] != 160:
+         img = cv2.resize(img, (160,144))
+
       img = img.astype('float')
+      img = img/255.0
 
       fake = np.zeros((1,144,160,3))
       fake[0,:,:,:] = img
 
       gen_img = sess.run([logit], feed_dict={input_image:fake})[0]
+      gen_img = gen_img*255
       image_name = image.split('.png')[0]+'_output.png'
 
       cv2.imwrite('../images/'+image_name, gen_img[0,:,:,:])

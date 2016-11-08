@@ -9,7 +9,7 @@ import os
 import cv2
 import numpy as np
 
-def get_batch(batch_size, image_list):
+def get_batch(batch_size, image_list, normalize):
    shuffle(image_list)
    image_list = image_list[:batch_size]
 
@@ -24,6 +24,10 @@ def get_batch(batch_size, image_list):
 
       gray_img = cv2.imread(gray_image)
       gray_img = gray_img.astype('float')
+
+      if normalize:
+         original_img = original_img/255.0
+         gray_img = gray_img/255.0
 
       original_images.append(original_img)
       gray_images.append(gray_img)
