@@ -23,31 +23,51 @@ on the small amount of sample images.
 ## Using your own data
 
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_3.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_3_output.png?raw=true)
+![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_3.png?raw=true)
+![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_3_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_5.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_5_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_5.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_5_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_1.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_1_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_1.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_1_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_2.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_2_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_2.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_2_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_4.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_4_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_4.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_4_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_6.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_6_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_6.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_6_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_7.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_7_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_7.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_7_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_8.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_8_output.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_8.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_8_output.png?raw=true)
 
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_9.png?raw=true)
-![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_9_output.png?raw=true)
+[test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_9.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_9_output.png?raw=true)
 
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_10.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_10_output.png?raw=true)
+
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_11.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_11_output.png?raw=true)
+
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_12.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_12_output.png?raw=true)
+
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_13.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_13_output.png?raw=true)
+
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_14.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_14_output.png?raw=true)
+
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_15.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_15_output.png?raw=true)
+
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_16.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_16_output.png?raw=true)
 
