@@ -17,7 +17,8 @@ def get_batch(batch_size, image_list, normalize):
    gray_images = []
 
    for image in image_list:
-      gray_image = image.split('.')[0]+'_gray.png'
+      filename, file_extension = os.path.splitext(image)
+      gray_image = filename+'_gray.png'
 
       original_img = cv2.imread(image)
       original_img = original_img.astype('float')
