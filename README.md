@@ -44,9 +44,11 @@ videos/
    ...
 `
 use `extract_frames.sh` to extract images from each video. Just pass it the folder containing images.
+
 Depending on if the video had a border around the game, you may need to use `crop_images.py` to crop
 out the border. There are comments in the script you can uncomment to view the image before it crops
 all of them to be sure the cropping is correct.
+
 Finally, use `convert_images.py` to create resized and gray images for training.
 
 
