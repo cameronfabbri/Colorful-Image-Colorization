@@ -43,7 +43,7 @@ def train(checkpoint_dir, image_list, batch_size, normalize):
 
       tf.scalar_summary('loss', loss)
       
-      train_op = tf.train.AdamOptimizer(learning_rate=1e-10).minimize(loss, global_step=global_step)
+      train_op = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss, global_step=global_step)
 
       # summary for tensorboard graph
       summary_op = tf.merge_all_summaries()
