@@ -51,6 +51,7 @@ all of them to be sure the cropping is correct.
 
 Finally, use `convert_images.py` to create resized and gray images for training.
 
+## Results
 
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_3.png?raw=true)
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_3_output.png?raw=true)
