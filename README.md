@@ -39,10 +39,14 @@ The easiest method to obtain images is to extract them from Youtube walkthrough 
 different games. Given that you have a folder with videos 
 `
 videos/
+
    video_1.mp4
+   
    video_2.mp4
+   
    ...
 `
+
 use `extract_frames.sh` to extract images from each video. Just pass it the folder containing images.
 
 Depending on if the video had a border around the game, you may need to use `crop_images.py` to crop
