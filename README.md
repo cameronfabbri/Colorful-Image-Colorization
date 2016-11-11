@@ -40,11 +40,11 @@ different games. Given that you have a folder with videos
 
 `videos/`
 
-`   video_1.mp4`
+`video_1.mp4`
+  
+`video_2.mp4`
    
-`   video_2.mp4`
-   
-`   ...`
+`...`
 
 
 use `extract_frames.sh` to extract images from each video. Just pass it the folder containing images.
