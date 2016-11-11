@@ -19,10 +19,19 @@ and tested on Pokemon Blue Version. Sample results below.
 You can use this with some sample training images provided in `images/train`.
 Run `python train.py -c model_dir/ -b 5 -d ../images/train/ -n n` to start training
 on the small amount of sample images. This will create a directory called `model_dir`
-in the `train` folder.
+in the `train` folder. If you get an error about CUDA running out of memory, reduce
+the batch size.
 
+The files in the `images/train` folder are as follows:
+- image_1.png: The original image extracted from the video (after possible cropping)
+- image_1_resized.png: The original image resized to (160,144).
+- image_1_resized_gray.png: The original image resized to (160,144) and converted to grayscale.
+
+The training attempt to obtain the resized color image when given the resized gray image.
 
 ## Using your own data
+
+There are scripts included to help create your own dataset.
 
 
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_3.png?raw=true)
