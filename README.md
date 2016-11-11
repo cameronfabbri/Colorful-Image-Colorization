@@ -1,8 +1,11 @@
-# Image-Color
-A deep learning approach to colorizing images
+# Colorizing Images
+A deep learning approach to colorizing images, specifically for Pokemon.
 
 The current model was trained on screenshots taken from Pokemon Silver, Crystal,
 and Diamond, then tested on Pokemon Blue Version. Sample results below.
+
+![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_3.png?raw=true)
+![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_3_output.png?raw=true)
 
 ## Basic Usage
 `python train.py --help`
