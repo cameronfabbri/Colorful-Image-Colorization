@@ -47,7 +47,7 @@ on the small amount of sample images.
 ![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_8.png?raw=true)
 ![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_8_output.png?raw=true)
 
-[test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_9.png?raw=true)
+![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_9.png?raw=true)
 ![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_9_output.png?raw=true)
 
 ![test_2](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_10.png?raw=true)
