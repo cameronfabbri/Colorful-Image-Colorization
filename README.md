@@ -27,11 +27,23 @@ The files in the `images/train` folder are as follows:
 - image_1_resized.png: The original image resized to (160,144).
 - image_1_resized_gray.png: The original image resized to (160,144) and converted to grayscale.
 
-The training attempt to obtain the resized color image when given the resized gray image.
+The training attempts to obtain the resized color image when given the resized gray image.
 
 ## Using your own data
 
-There are scripts included to help create your own dataset.
+There are scripts included to help create your own dataset, which is desirable because
+the amount of data needed to obtain good results is a good amount. The results below
+were trained on about 50,000 images.
+
+The easiest method to obtain images is to extract them from Youtube walkthrough videos of
+different games. Given that you have a folder with videos 
+`
+videos/
+   video_1.mp4
+   video_2.mp4
+   ...
+`
+use `extract_frames.sh` to extract images from each video.
 
 
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_3.png?raw=true)
