@@ -1,8 +1,8 @@
 # Image-Color
 A deep learning approach to colorizing images
 
-The current model was trained on screenshots taken from Pokemon Silver,
-and tested on Pokemon Blue Version. Sample results below.
+The current model was trained on screenshots taken from Pokemon Silver, Crystal,
+and Diamond, then tested on Pokemon Blue Version. Sample results below.
 
 ## Basic Usage
 `python train.py --help`
