@@ -37,15 +37,15 @@ were trained on about 50,000 images.
 
 The easiest method to obtain images is to extract them from Youtube walkthrough videos of
 different games. Given that you have a folder with videos 
-`
-videos/
 
-   video_1.mp4
+`videos/`
+
+`   video_1.mp4`
    
-   video_2.mp4
+`   video_2.mp4`
    
-   ...
-`
+`   ...`
+
 
 use `extract_frames.sh` to extract images from each video. Just pass it the folder containing images.
 
