@@ -16,8 +16,10 @@ and tested on Pokemon Blue Version. Sample results below.
 `-n --normalize      <str> [y/n normalize training images]`
 
 
+You can use this with some sample training images provided in `images/train`.
 Run `python train.py -c model_dir/ -b 5 -d ../images/train/ -n n` to start training
-on the small amount of sample images.
+on the small amount of sample images. This will create a directory called `model_dir`
+in the `train` folder.
 
 
 ## Using your own data
