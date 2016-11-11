@@ -2,9 +2,15 @@
 A deep learning approach to colorizing images
 
 The current model was trained on screenshots taken from Pokemon Silver,
-and tested on Pokemon Blue Version.
+and tested on Pokemon Blue Version. Sample results below.
 
-Usage and HOWTO coming very very soon...
+## Basic Usage
+`python train.py --help`
+`-c --checkpoint_dir <str> [path to save the model]`
+`-b --batch_size     <int> [batch size]`
+`-d --data_dir       <str> [path to root image folder]`
+`-n --normalize      <str> [y/n normalize training images]`
+
 
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_3.png?raw=true)
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_3_output.png?raw=true)
