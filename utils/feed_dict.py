@@ -18,12 +18,16 @@ def get_batch(batch_size, image_list, normalize):
 
    for image in image_list:
       gray_image = image.split('.')[0]+'_gray.png'
-               
+
       original_img = cv2.imread(image)
       original_img = original_img.astype('float')
 
-      gray_img = cv2.imread(gray_image)
-      gray_img = gray_img.astype('float')
+      try:
+         gray_img = cv2.imread(gray_image)
+         gray_img = gray_img.astype('float')
+      except:
+         print 'No image ' + gray_image
+         continue
 
       if normalize:
          original_img = original_img/255.0

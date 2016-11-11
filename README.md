@@ -16,6 +16,11 @@ and tested on Pokemon Blue Version. Sample results below.
 `-n --normalize      <str> [y/n normalize training images]`
 
 
+Run `python train.py -c model_dir/ -b 5 -d ../images/train/ -n n` to start training
+on the small amount of sample images.
+
+
+## Using your own data
 
 
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/test_3.png?raw=true)

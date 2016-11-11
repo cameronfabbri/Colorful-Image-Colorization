@@ -43,7 +43,7 @@ def train(checkpoint_dir, image_list, batch_size, normalize):
 
       tf.scalar_summary('loss', loss)
       
-      train_op = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss, global_step=global_step)
+      train_op = tf.train.AdamOptimizer(learning_rate=1e-10).minimize(loss, global_step=global_step)
 
       # summary for tensorboard graph
       summary_op = tf.merge_all_summaries()
@@ -88,14 +88,16 @@ def train(checkpoint_dir, image_list, batch_size, normalize):
          step += 1
          feed_dict = get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list, normalize)
          _, loss_value = sess.run([train_op, loss], feed_dict=feed_dict)
-         print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
+
+         if step % 10 == 0:
+            print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
         
          # save tensorboard stuff
          #if step%200 == 0:
          #   summary_str = sess.run(summary_op)
          #   summary_writer.add_summary(summary_str, step)
 
-         if step%300 == 0:
+         if step%100 == 0:
             print "Saving model"
             print
             saver.save(sess, checkpoint_dir+"training/checkpoint", global_step=global_step)
