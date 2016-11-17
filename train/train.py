@@ -17,6 +17,9 @@ import feed_dict as fd
 def get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list, normalize):
 
    original_images, gray_images = fd.get_batch(batch_size, image_list, normalize)
+   print original_images.shape
+   exit()
+
 
    feed_dict = {
       original_images_placeholder: original_images,
