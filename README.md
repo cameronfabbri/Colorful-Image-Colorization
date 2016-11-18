@@ -7,7 +7,7 @@ and Diamond, then tested on Pokemon Blue Version. Sample results below.
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/testing/test_3.png?raw=true)
 ![test_1](https://github.com/cameronfabbri/Colorful-Image-Colorization/blob/master/images/resized/output/test_3_output.png?raw=true)
 
-## Basic Usage
+## Basic Training Usage
 `python train.py --help`
 
 `-c --checkpoint_dir <str> [path to save the model]`
@@ -31,6 +31,16 @@ The files in the `images/train` folder are as follows:
 - image_1_resized_gray.png: The original image resized to (160,144) and converted to grayscale.
 
 The training attempts to obtain the resized color image when given the resized gray image.
+
+## Evaluating on Images
+I've included a trained model in the `models/` directory that you can run your own images on.
+You can either run the model on one image or a folder of images. For one image, run `eval_one.py`
+and pass it the model and the image as parameters. To run it on multiple images, run `eval.py`
+and pass it the model and the folder to the images. `eval.py` will save your images in the 
+`output` folder, where as `eval_one.py` will save them in the current directory. Examples:
+
+`python eval_one.py ../models/ my_image.png`
+`python eval.py ../models/ ../images/testing/`
 
 ## Using your own data
 
