@@ -43,7 +43,7 @@ and pass it the model and the folder to the images. `eval.py` will save your ima
 
 `python eval.py ../models/generation_2/ ../images/testing/`
 
-## Using your own data
+## Training your own data
 
 There are scripts included to help create your own dataset, which is desirable because
 the amount of data needed to obtain good results is a good amount. The results below
