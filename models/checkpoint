@@ -1,6 +1,2 @@
-model_checkpoint_path: "/home/fabbric/data_dir/games/pokemon/generation_2/models/training/checkpoint-52800"
-all_model_checkpoint_paths: "/home/fabbric/data_dir/games/pokemon/generation_2/models/training/checkpoint-51600"
-all_model_checkpoint_paths: "/home/fabbric/data_dir/games/pokemon/generation_2/models/training/checkpoint-51900"
-all_model_checkpoint_paths: "/home/fabbric/data_dir/games/pokemon/generation_2/models/training/checkpoint-52200"
-all_model_checkpoint_paths: "/home/fabbric/data_dir/games/pokemon/generation_2/models/training/checkpoint-52500"
-all_model_checkpoint_paths: "/home/fabbric/data_dir/games/pokemon/generation_2/models/training/checkpoint-52800"
+model_checkpoint_path: "./checkpoint-52800"
+all_model_checkpoint_paths: "./checkpoint-52800"
