@@ -39,8 +39,8 @@ and pass it the model and the image as parameters. To run it on multiple images,
 and pass it the model and the folder to the images. `eval.py` will save your images in the 
 `output` folder, where as `eval_one.py` will save them in the current directory. Examples:
 
-`python eval_one.py ../models/ my_image.png`
-`python eval.py ../models/ ../images/testing/`
+`python eval_one.py ../models/generation_2/ my_image.png`
+`python eval.py ../models/generation_2/ ../images/testing/`
 
 ## Using your own data
 
