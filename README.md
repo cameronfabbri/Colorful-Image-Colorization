@@ -40,6 +40,7 @@ and pass it the model and the folder to the images. `eval.py` will save your ima
 `output` folder, where as `eval_one.py` will save them in the current directory. Examples:
 
 `python eval_one.py ../models/generation_2/ my_image.png`
+
 `python eval.py ../models/generation_2/ ../images/testing/`
 
 ## Using your own data
