@@ -90,7 +90,7 @@ def train(checkpoint_dir, image_list, batch_size, normalize):
          feed_dict = get_feed_dict(batch_size, original_images_placeholder, gray_images_placeholder, image_list, normalize)
          _, loss_value = sess.run([train_op, loss], feed_dict=feed_dict)
 
-         if step % 10 == 0:
+         if step % 5 == 0:
             print " Step: " + str(sess.run(global_step)) + " Loss: " + str(loss_value)
         
          # save tensorboard stuff
