@@ -13,7 +13,7 @@ import sys
 import numpy as np
 import fnmatch
 
-sys.path.insert(0, '../utils/')
+sys.path.insert(0, '../architecture/')
 sys.path.insert(0, '../model/')
 
 import architecture
