@@ -33,9 +33,12 @@ def eval(checkpoint_dir, data_dir):
       input_image = tf.placeholder(tf.float32, shape=(1,144,160,3))
       logit = architecture.inference(input_image, 'test')
 
+      # specifies to use the CPU for eval, meaning I can eval while training
+      config = tf.ConfigProto(device_count={'GPU':0})
+
       variables = tf.all_variables()
       init      = tf.initialize_all_variables()
-      sess      = tf.Session()
+      sess      = tf.Session(config=config)
       saver     = tf.train.Saver(variables)
 
       tf.train.start_queue_runners(sess=sess)
@@ -74,7 +77,7 @@ def eval(checkpoint_dir, data_dir):
          image_name = image.split('.png')[0]+'_output.png'
          image_name = image_name.split('/')[-1]
          try:
-            print 'Writing image ', image_name
+            print 'Writing image', image_name
             cv2.imwrite('../images/output/'+image_name, gen_img[0,:,:,:])
          except:
             raise
