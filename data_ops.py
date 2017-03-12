@@ -172,21 +172,25 @@ def loadData(data_dir, batch_size, train=True):
    if data_dir is None or not os.path.exists(data_dir):
       raise Exception('data_dir does not exist')
 
-   pkl_train_file = 'pokemon.pkl'
+   if train:
+      pkl_train_file = 'pokemon.pkl'
 
-   if os.path.isfile(pkl_train_file):
-      print 'Found pickle file'
-      train_paths = pickle.load(open(pkl_train_file, 'rb'))
+      if os.path.isfile(pkl_train_file):
+         print 'Found pickle file'
+         train_paths = pickle.load(open(pkl_train_file, 'rb'))
+      else:
+         train_paths = getPaths(data_dir)
+         random.shuffle(train_paths)
+
+         pf   = open(pkl_train_file, 'wb')
+         data = pickle.dumps(train_paths)
+         pf.write(data)
+         pf.close()
+      input_paths = train_paths
+   
    else:
-      train_paths = getPaths(data_dir)
-      random.shuffle(train_paths)
-
-      pf   = open(pkl_train_file, 'wb')
-      data = pickle.dumps(train_paths)
-      pf.write(data)
-      pf.close()
-
-   input_paths = train_paths
+      test_paths = glob.glob(data_dir+'*.*')
+      input_paths = test_paths
 
    decode = tf.image.decode_image
 
@@ -197,22 +201,25 @@ def loadData(data_dir, batch_size, train=True):
       path_queue = tf.train.string_input_producer(input_paths, shuffle=train)
       reader = tf.WholeFileReader()
       paths, contents = reader.read(path_queue)
-      raw_input = decode(contents)
-      raw_input = tf.image.convert_image_dtype(raw_input, dtype=tf.float32)
+      raw_input_ = decode(contents)
+      raw_input_ = tf.image.convert_image_dtype(raw_input_, dtype=tf.float32)
 
-      assertion = tf.assert_equal(tf.shape(raw_input)[2], 3, message='image does not have 3 channels')
+      assertion = tf.assert_equal(tf.shape(raw_input_)[2], 3, message='image does not have 3 channels')
       with tf.control_dependencies([assertion]):
-         raw_input = tf.identity(raw_input)
+         raw_input_ = tf.identity(raw_input_)
 
-      raw_input.set_shape([None, None, 3])
+      raw_input_.set_shape([None, None, 3])
 
       # load color and brightness from image, no B image exists here
-      lab = rgb_to_lab(raw_input)
-      L_chan, a_chan, b_chan = preprocess_lab(lab)
-      a_images = tf.expand_dims(L_chan, axis=2)
-      b_images = tf.stack([a_chan, b_chan], axis=2)
+      #lab = rgb_to_lab(raw_input_)
+      #L_chan, a_chan, b_chan = preprocess_lab(lab)
+      #a_images = tf.expand_dims(L_chan, axis=2)
+      #b_images = tf.stack([a_chan, b_chan], axis=2)
     
-   inputs, targets = [a_images, b_images]
+   #inputs, targets = [a_images, b_images]
+   #inputs, targets = [a_images, b_images]
+   inputs  = tf.image.rgb_to_grayscale(raw_input_)
+   targets = raw_input_
 
    # synchronize seed for image operations so that we do the same operations to both
    # input and output images

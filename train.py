@@ -59,17 +59,21 @@ if __name__ == '__main__':
    num_train = Data.count
    
    # The gray 'lightness' channel in range [-1, 1]
-   L_image   = Data.inputs
+   #L_image   = Data.inputs
+   gray_image   = Data.inputs
    
    # The color channels in [-1, 1] range
-   ab_image  = Data.targets
+   #ab_image  = Data.targets
+   color_image  = Data.targets
 
    # architecture from
    # http://hi.cs.waseda.ac.jp/~iizuka/projects/colorization/data/colorization_sig2016.pdf
-   col_img = colorarch.netG(L_image, BATCH_SIZE)
-
-   loss = tf.reduce_mean((ab_image-col_img)**2)
-   train_op = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss, global_step=global_step)
+   #col_img = colorarch.netG(L_image, BATCH_SIZE)
+   col_img = colorarch.architecture(gray_image)
+   
+   #loss = tf.reduce_mean((ab_image-col_img)**2)
+   loss = tf.reduce_mean(tf.nn.l2_loss(color_image-col_img))
+   train_op = tf.train.AdamOptimizer(learning_rate=1e-6).minimize(loss, global_step=global_step)
    saver = tf.train.Saver(max_to_keep=1)
    
    # tensorboard summaries
