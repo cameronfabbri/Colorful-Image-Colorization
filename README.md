@@ -9,8 +9,6 @@ and Diamond, then tested on Pokemon Blue Version. Sample results below.
 
 <img src="http://imgur.com/1sXqH6b.png" width=224> <img src="http://imgur.com/eRkvyxK.png" width=224>
 
-<img src="http://imgur.com/1sXqH6b.png" width=224> <img src="http://imgur.com/eRkvyxK.png" width=224>
-
 <img src="http://i.imgur.com/Naq6UMP.png" width=224> <img src="http://i.imgur.com/zoYjgd2.png" width=224>
 
 <img src="http://i.imgur.com/XeT8ELu.png" width=224> <img src="http://i.imgur.com/l9QP9lx.png" width=224>
