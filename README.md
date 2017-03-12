@@ -26,7 +26,7 @@ and pass it the model and the folder to the images. `eval.py` will save your ima
 ## Training your own data
 
 There are scripts included to help create your own dataset, which is desirable because
-the amount of data needed to obtain good results is a good amount. The results below
+the amount of data needed to obtain good results is a good amount. The results above
 were trained on about 50,000 images.
 
 The easiest method to obtain images is to extract them from Youtube walkthrough videos of
@@ -46,6 +46,3 @@ use `extract_frames.sh` to extract images from each video. Just pass it the fold
 Depending on if the video had a border around the game, you may need to use `crop_images.py` to crop
 out the border. There are comments in the script you can uncomment to view the image before it crops
 all of them to be sure the cropping is correct.
-
-## Results
-
