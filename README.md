@@ -7,7 +7,7 @@ A deep learning approach to colorizing images, specifically for Pokemon.
 The current model was trained on screenshots taken from Pokemon Silver, Crystal,
 and Diamond, then tested on Pokemon Blue Version. Sample results below.
 
-<img src="http://imgur.com/1sXqH6b.png" width=256> <img src="http://imgur.com/eRkvyxK.png" width=256>
+<img src="http://imgur.com/1sXqH6b.png" width=224> <img src="http://imgur.com/eRkvyxK.png" width=224>
 
 ![img2](http://imgur.com/1sXqH6b.png =450x) ![img1](http://imgur.com/eRkvyxK.png =450x)
 
