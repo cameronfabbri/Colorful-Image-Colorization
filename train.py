@@ -17,7 +17,7 @@ import data_ops
 if __name__ == '__main__':
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('--EPOCHS',required=False,default=0,type=int,help='Number of epochs to train for')
+   parser.add_argument('--EPOCHS',required=False,default=10,type=int,help='Number of epochs to train for')
    parser.add_argument('--DATA_DIR',       required=True,help='Directory where data is')
    parser.add_argument('--BATCH_SIZE',     required=False,type=int,default=32,help='Batch size to use')
    a = parser.parse_args()
@@ -73,7 +73,7 @@ if __name__ == '__main__':
    
    #loss = tf.reduce_mean((ab_image-col_img)**2)
    loss = tf.reduce_mean(tf.nn.l2_loss(color_image-col_img))
-   train_op = tf.train.AdamOptimizer(learning_rate=1e-6).minimize(loss, global_step=global_step)
+   train_op = tf.train.AdamOptimizer(learning_rate=1e-5).minimize(loss, global_step=global_step)
    saver = tf.train.Saver(max_to_keep=1)
    
    # tensorboard summaries
