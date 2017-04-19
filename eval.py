@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
    CHECKPOINT_DIR = 'checkpoints/'
    IMAGES_DIR = CHECKPOINT_DIR+'images/'
-   BATCH_SIZE=16
+   BATCH_SIZE=1
 
    test_images = glob.glob(sys.argv[1]+'*.*')
    num_images = len(test_images)
@@ -61,11 +61,7 @@ if __name__ == '__main__':
    threads = tf.train.start_queue_runners(sess, coord=coord)
 
    prediction = np.squeeze(np.asarray(sess.run(col_img)))
-   misc.imsave(IMAGES_DIR+str(i)+'.png', prediction)
-   exit()
    i = 1
-   for p in prediction:
-      print p.shape
-      exit()
-      i+=1
+   misc.imsave(IMAGES_DIR+str(i)+'.png', prediction)
+   i+=1
    print 'Done. Images are in',IMAGES_DIR
