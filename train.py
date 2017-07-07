@@ -1,6 +1,5 @@
 import cPickle as pickle
 import tensorflow as tf
-import colorarch
 from scipy import misc
 import numpy as np
 import argparse
@@ -9,17 +8,15 @@ import sys
 import os
 import time
 
-sys.path.insert(0, 'ops/')
-sys.path.insert(0, 'config/')
-
 import data_ops
+import net
 
 if __name__ == '__main__':
 
    parser = argparse.ArgumentParser()
-   parser.add_argument('--EPOCHS',required=False,default=10,type=int,help='Number of epochs to train for')
-   parser.add_argument('--DATA_DIR',       required=True,help='Directory where data is')
-   parser.add_argument('--BATCH_SIZE',     required=False,type=int,default=32,help='Batch size to use')
+   parser.add_argument('--EPOCHS',     required=False,default=10,type=int,help='Number of epochs to train for')
+   parser.add_argument('--DATA_DIR',   required=True,help='Directory where data is')
+   parser.add_argument('--BATCH_SIZE', required=False,type=int,default=32,help='Batch size to use')
    a = parser.parse_args()
 
    EPOCHS     = a.EPOCHS
@@ -36,9 +33,9 @@ if __name__ == '__main__':
    
    # write all this info to a pickle file in the experiments directory
    exp_info = dict()
-   exp_info['EPOCHS'] = EPOCHS
-   exp_info['DATA_DIR']        = DATA_DIR
-   exp_info['BATCH_SIZE']      = BATCH_SIZE
+   exp_info['EPOCHS']     = EPOCHS
+   exp_info['DATA_DIR']   = DATA_DIR
+   exp_info['BATCH_SIZE'] = BATCH_SIZE
    exp_pkl = open(CHECKPOINT_DIR+'info.pkl', 'wb')
    data = pickle.dumps(exp_info)
    exp_pkl.write(data)
@@ -55,21 +52,13 @@ if __name__ == '__main__':
 
    # load data
    Data = data_ops.loadData(DATA_DIR, BATCH_SIZE)
-   # number of training images
-   num_train = Data.count
-   
-   # The gray 'lightness' channel in range [-1, 1]
-   #L_image   = Data.inputs
-   gray_image   = Data.inputs
-   
-   # The color channels in [-1, 1] range
-   #ab_image  = Data.targets
-   color_image  = Data.targets
+
+   num_train   = Data.count
+   gray_image  = Data.inputs
+   color_image = Data.targets
 
    # architecture from
-   # http://hi.cs.waseda.ac.jp/~iizuka/projects/colorization/data/colorization_sig2016.pdf
-   #col_img = colorarch.netG(L_image, BATCH_SIZE)
-   col_img = colorarch.architecture(gray_image)
+   col_img = net.architecture(gray_image)
    
    #loss = tf.reduce_mean((ab_image-col_img)**2)
    loss = tf.reduce_mean(tf.nn.l2_loss(color_image-col_img))
@@ -80,7 +69,7 @@ if __name__ == '__main__':
    tf.summary.scalar('loss', loss)
    
    init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
-   sess = tf.Session(config=tf.ConfigProto(log_device_placement=False))
+   sess = tf.Session()
    sess.run(init)
 
    # write out logs for tensorboard to the checkpointSdir
