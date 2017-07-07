@@ -62,7 +62,7 @@ if __name__ == '__main__':
    
    #loss = tf.reduce_mean((ab_image-col_img)**2)
    loss = tf.reduce_mean(tf.nn.l2_loss(color_image-col_img))
-   train_op = tf.train.AdamOptimizer(learning_rate=1e-5).minimize(loss, global_step=global_step)
+   train_op = tf.train.AdamOptimizer(learning_rate=1e-6).minimize(loss, global_step=global_step)
    saver = tf.train.Saver(max_to_keep=1)
    
    # tensorboard summaries
